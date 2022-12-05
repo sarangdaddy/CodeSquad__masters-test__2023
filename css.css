@@ -1,0 +1,29 @@
+body {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.circle__main {
+  margin-top: 20px;
+}
+
+.circle__main {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.circle__size {
+  margin-bottom: 20px;
+}
+
+.circle__show {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.circle__form__input {
+  width: 250px;
+}
