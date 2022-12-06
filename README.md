@@ -147,8 +147,9 @@ Sun, Earth, Moon
 ```
 
 5. css는 아래 사이트들로부터 도움을 받았다.
-   [1. 참고사이트](#https://stackoverflow.com/questions/25472490/make-div-orbit-around-a-moving-div)
-   [2. 참고사이트](#https://bskyvision.com/entry/css-css%EC%97%90%EC%84%9C-%EA%BA%BD%EC%87%A0-%EC%9D%98-%EC%9D%98%EB%AF%B8%EB%8A%94)
+
+[1. 참고사이트](#https://stackoverflow.com/questions/25472490/make-div-orbit-around-a-moving-div)
+[2. 참고사이트](#https://bskyvision.com/entry/css-css%EC%97%90%EC%84%9C-%EA%BA%BD%EC%87%A0-%EC%9D%98-%EC%9D%98%EB%AF%B8%EB%8A%94)
 
 </br>
 
