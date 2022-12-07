@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Step3</title>
+    <link rel="stylesheet" href="css.css" />
+  </head>
+  <body>
+    <header>
+      <h2>태양, 지구, 달, 화성의 위치를 보여 드립니다.</h2>
+      <h3>[날짜받기] 버튼을 클릭하세요.</h3>
+      <form class="date__form">
+        <div class="date__result">
+          <span class="date__year">2022년</span>
+          <span class="date__month">01월</span>
+          <span class="date__day">01일</span>
+          <button class="date__form__btn">날짜받기</button>
+        </div>
+      </form>
+    </header>
+    <main class="space__main">
+      <div class="object" id="sun"></div>
+      <div class="orbit mars-orbit"></div>
+      <div class="mars-spin">
+        <div class="object" id="mars"></div>
+      </div>
+      <div class="orbit earth-orbit"></div>
+      <div class="earth-spin">
+        <div class="object" id="earth"></div>
+        <div class="orbit moon-orbit"></div>
+        <div class="moon-spin">
+          <div class="object" id="moon"></div>
+        </div>
+      </div>
+    </main>
+    <script src="space.js"></script>
+    <script src="date.js"></script>
+  </body>
+</html>
