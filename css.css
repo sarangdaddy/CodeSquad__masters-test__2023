@@ -1,0 +1,144 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: black;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+h2,
+h3 {
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  margin: 10px;
+}
+
+.date__result {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.date__form__btn {
+  color: white;
+  background-color: black;
+}
+
+.object {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.object div {
+  margin: auto;
+}
+
+.space__main {
+  background-color: black;
+  position: relative;
+  height: 1100px;
+  width: 1100px;
+  margin: auto;
+  overflow: hidden;
+}
+
+.orbit {
+  border: 1px dashed sandybrown;
+}
+
+#sun,
+.orbit,
+.orbit + div,
+.orbit + div > div {
+  position: absolute;
+}
+
+#sun,
+.orbit,
+.orbit + div {
+  top: 50%;
+  left: 50%;
+}
+
+.orbit + div > div {
+  top: 0;
+  left: 50%;
+}
+
+.orbit,
+.orbit + div div {
+  border-radius: 50%;
+}
+
+#sun {
+  height: 200px;
+  width: 200px;
+  margin-top: -100px;
+  margin-left: -100px;
+  border-radius: 50%;
+  box-shadow: 0 0 84px tomato;
+}
+
+#earth {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100px;
+  width: 100px;
+  margin-left: -50px;
+  margin-top: -50px;
+  border-radius: 50%;
+}
+
+.earth-orbit,
+.earth-spin {
+  width: 500px;
+  height: 500px;
+  margin-left: -250px;
+  margin-top: -250px;
+}
+
+#mars {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 150px;
+  width: 150px;
+  margin-left: -75px;
+  margin-top: -75px;
+  border-radius: 50%;
+}
+
+.mars-orbit,
+.mars-spin {
+  width: 900px;
+  height: 900px;
+  margin-left: -450px;
+  margin-top: -450px;
+  border-color: greenyellow;
+}
+
+#moon {
+  margin-top: -15px;
+  margin-left: -15px;
+  height: 30px;
+  width: 30px;
+}
+
+.moon-orbit,
+.moon-spin {
+  height: 120px;
+  width: 120px;
+  margin-left: -60px;
+  margin-top: -60px;
+  border-color: aqua;
+}
