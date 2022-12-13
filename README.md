@@ -5,3 +5,5 @@
 ## 🔗 [**2단계 :** 지구 태양 달의 위치 표시하기](https://github.com/sarangdaddy/CodeSquad__masters-test__2023/tree/step-2)
 
 ## 🔗 [**3단계 :** 콘솔 태양계 출력 프로그램 완성](https://github.com/sarangdaddy/CodeSquad__masters-test__2023/tree/step-3)
+
+## 🔗 [**4단계 :** 추가기능 구현](https://github.com/sarangdaddy/CodeSquad__masters-test__2023/tree/step-4)
