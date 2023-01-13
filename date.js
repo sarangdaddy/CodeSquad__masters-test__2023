@@ -10,29 +10,30 @@ const earthOrbit = document.querySelector(".earth-spin");
 const moonOrbit = document.querySelector(".moon-spin");
 const marsOrbit = document.querySelector(".mars-spin");
 
-date = {};
-
-const defaultMilsec = Date.parse("2022-01-01:00:00:00"); // 2022/01/01 을 밀리초로 환산 1640962800000
-const oneDayMilsec = 86400000;
-let plusDayMilsec = defaultMilsec;
-let countDay = 0;
+date = {
+  defaultMilsec: Date.parse("2022-01-01:00:00:00"),
+  oneDayMilsec: 86400000,
+  plusDayMilsec: this.defaultMilsec,
+  countDay: 0,
+};
 
 let interval;
 
 // Start 버튼 클릭시 0.1초 마다 하루 + 된다.
 date.startTimer = function (event) {
   event.preventDefault();
+  this.plusDayMilsec = this.defaultMilsec;
   interval = setInterval(() => {
-    plusDayMilsec += oneDayMilsec; // 2022/01/01 + 1 day
-    this.getDateValue(plusDayMilsec);
-    countDay++; // rotate day가 0.1초마다 1찍 증가한다.
-    this.rotateObject(countDay);
+    this.plusDayMilsec += this.oneDayMilsec; // 2022/01/01 + 1 day
+    this.getDateValue(this.plusDayMilsec);
+    this.countDay++; // rotate day가 0.1초마다 1찍 증가한다.
+    this.rotateObject(this.countDay);
   }, 100);
 };
 
 // 하루가 증가할때마다 인터페이스 날짜 변경하는 함수
-date.getDateValue = function (plusDayMilsec) {
-  const changeDate = new Date(plusDayMilsec);
+date.getDateValue = function (day) {
+  const changeDate = new Date(day);
   const changeYear = changeDate.getFullYear();
   const changeMonth = changeDate.getMonth() + 1;
   const changeDay = changeDate.getDate();
@@ -71,12 +72,12 @@ date.pauseTimer = function (event) {
 date.resetTimer = function (event) {
   event.preventDefault();
   clearInterval(interval);
-  plusDayMilsec = defaultMilsec;
-  countDay = 0;
-  this.getDateValue(plusDayMilsec);
-  this.rotateObject(countDay);
+  this.plusDayMilsec = this.defaultMilsec;
+  this.countDay = 0;
+  this.getDateValue(this.plusDayMilsec);
+  this.rotateObject(this.countDay);
 };
 
 startButton.addEventListener("click", date.startTimer.bind(date));
-pauseButton.addEventListener("click", date.pauseTimer);
+pauseButton.addEventListener("click", date.pauseTimer.bind(date));
 resetButton.addEventListener("click", date.resetTimer.bind(date));

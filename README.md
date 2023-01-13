@@ -106,87 +106,131 @@
 
 </br>
 
-## space 객체 (3단계와 동일)
+## space 객체
 
 1. 인터페이스에 호출할 태양, 지구, 화성, 달을 생성한다.
 2. 1단계에서 구현한 지름으로 원을 만드는 기능을 도입하여 구축했다.
-3. init값으로 태양, 지구, 화성, 달의 지름 크기를 불러온다.
+3. Space 생성자 (Space 관리자)를 구현하여 행성을 우주에 호출한다.
 
 ```js
-// 3단계에서 화성이 추가되었다.
-let space = { sun: [], earth: [], moon: [], mars: [] };
+// Space 생성자 (Space 관리자 - 행성을 추출하여 우주에 호출한다.)
+function Space(objName) {
+  this.objName = objName;
+}
 
-// Sun, Earth, Moon, Mars의 지름 초기값을 입력 해준다.
-space.init = function () {
-  const sunR = 7;
-  const earthR = 3;
-  const moonR = 1;
-  const marsR = 5; // Mars 추가
+Space.prototype.objName = null;
 
-  this.planetSize(sunR);
-  this.planetSize(earthR);
-  this.planetSize(moonR);
-  this.planetSize(marsR);
+// 행성을 추출하는 메서드
+Space.prototype.getObj = function () {
+  switch (this.objName) {
+    case "sun":
+      this.showObj(sunObject);
+      break;
+    case "mars":
+      this.showObj(marsObject);
+      break;
+    case "earth":
+      this.showObj(earthObject);
+      break;
+    case "moon":
+      this.showObj(moonObject);
+      break;
+  }
 };
-```
 
-4. 입력받은 지름값으로 행성 생성에 필요한 정보로 전환하여 각 행성 생성 함수로 전달한다.
-
-```js
-// 각 행성의 지름값으로 행성 생성에 필요한 정보를 가져온다.
-space.planetSize = function (d) {
-  const dia = Number(d); // 지름
-  const radius = Math.floor(d / 2); // 반지름
-  const centerX = radius;
-  const centerY = radius;
-
-  switch (dia) {
-    case 7:
-      this.makeSun(dia, radius, centerX, centerY);
-      break;
-    case 5:
-      this.makeMars(dia, radius, centerX, centerY);
-      break;
-    case 3:
-      this.makeEarth(dia, radius, centerX, centerY);
-      break;
-    case 1:
-      this.makeMoon(dia, radius, centerX, centerY);
-      break;
+// 추출한 행성을 보여주는 메서드
+Space.prototype.showObj = function (toHtml) {
+  for (let i = 0; i < this.dia; i++) {
+    const div = document.createElement("div");
+    div.innerText = this.array[i];
+    toHtml.appendChild(div);
   }
 };
 ```
 
-5. 화성 생성 함수
+4. Planet 생성자 (Planet 관리자)를 구축하여 행성을 생성한다.
 
 ```js
-// Mars 생성 함수
-space.makeMars = function (d, r, x, y) {
-  this.mars = Array.from({ length: d }, () => Array(d));
+// Planet 생성자 (Planet 관리자 - 행성을 생성한다.)
+function Planet(objName, dia) {
+  this.objName = objName;
+  this.dia = dia;
+  this.radius = Math.floor(dia / 2);
+  this.centerX = this.radius;
+  this.centerY = this.radius;
+  this.array = new Array();
+}
 
-  for (let i = x - r; i <= x + r; i++) {
-    for (let j = y - r; j <= y + r; j++) {
-      if ((i - r) * (i - r) + (j - r) * (j - r) <= r * r) {
-        this.mars[i][j] = "☄️";
+// Planet에 Space를 상속 시킨다. Space > Planet
+Planet.prototype = new Space();
+
+// 인자(지름)값으로 생성할 행성을 선택한다.
+Planet.prototype.selectPlanet = function () {
+  switch (this.dia) {
+    case 7:
+      this.makePlanet("🔥");
+      break;
+    case 5:
+      this.makePlanet("🎈");
+      break;
+    case 3:
+      this.makePlanet("🌏");
+      break;
+    case 1:
+      this.makePlanet("🌕");
+      break;
+  }
+};
+
+// 선택받은 행성을 생성한다.
+Planet.prototype.makePlanet = function (imo) {
+  this.array = Array.from({ length: this.dia }, () => Array(this.dia));
+
+  for (
+    let i = this.centerX - this.radius;
+    i <= this.centerX + this.radius;
+    i++
+  ) {
+    for (
+      let j = this.centerY - this.radius;
+      j <= this.centerY + this.radius;
+      j++
+    ) {
+      if (
+        (i - this.radius) * (i - this.radius) +
+          (j - this.radius) * (j - this.radius) <=
+        this.radius * this.radius
+      ) {
+        this.array[i][j] = `${imo}`;
       } else {
-        this.mars[i][j] = "";
+        this.array[i][j] = "";
       }
     }
   }
-  this.showTheMars(d);
-};
-
-// Mars 호출 함수
-space.showTheMars = function (d) {
-  for (let i = 0; i < d; i++) {
-    const div = document.createElement("div");
-    div.innerText = this.mars[i];
-    marsObject.appendChild(div);
-  }
 };
 ```
 
-6. 2단계에서 구현된 함수에 화성이 추가되었기에 태양, 지구, 달의 설명은 생략하겠다.
+5. 생성하고자 하는 각 행성의 이름과 지름값을 부여한다.
+
+```js
+const sun = new Planet("sun", 7);
+const earth = new Planet("earth", 3);
+const moon = new Planet("moon", 1);
+const mars = new Planet("mars", 5);
+```
+
+6. 행성 생성과 호출 실행값을 입력한다.
+
+```js
+sun.selectPlanet();
+sun.getObj();
+mars.selectPlanet();
+mars.getObj();
+earth.selectPlanet();
+earth.getObj();
+moon.selectPlanet();
+moon.getObj();
+```
 
 </br>
 

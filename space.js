@@ -3,142 +3,109 @@ const earthObject = document.querySelector("#earth");
 const moonObject = document.querySelector("#moon");
 const marsObject = document.querySelector("#mars");
 
-let space = { sun: [], earth: [], moon: [], mars: [] };
+// Space 생성자 (Space 관리자 - 행성을 추출하여 우주에 호출한다.)
+function Space(objName) {
+  this.objName = objName;
+}
 
-// 각 행성의 지름값으로 행성 생성에 필요한 정보를 가져온다.
-space.planetSize = function (d) {
-  const dia = Number(d); // 지름
-  const radius = Math.floor(d / 2); // 반지름
-  const centerX = radius;
-  const centerY = radius;
+Space.prototype.objName = null;
 
-  switch (dia) {
+// 행성을 추출하는 메서드
+Space.prototype.getObj = function () {
+  switch (this.objName) {
+    case "sun":
+      this.showObj(sunObject);
+      break;
+    case "mars":
+      this.showObj(marsObject);
+      break;
+    case "earth":
+      this.showObj(earthObject);
+      break;
+    case "moon":
+      this.showObj(moonObject);
+      break;
+  }
+};
+
+// 추출한 행성을 보여주는 메서드
+Space.prototype.showObj = function (toHtml) {
+  for (let i = 0; i < this.dia; i++) {
+    const div = document.createElement("div");
+    div.innerText = this.array[i];
+    toHtml.appendChild(div);
+  }
+};
+
+// Planet 생성자 (Planet 관리자 - 행성을 생성한다.)
+function Planet(objName, dia) {
+  this.objName = objName;
+  this.dia = dia;
+  this.radius = Math.floor(dia / 2);
+  this.centerX = this.radius;
+  this.centerY = this.radius;
+  this.array = new Array();
+}
+
+// Planet에 Space를 상속 시킨다. Space > Planet
+Planet.prototype = new Space();
+
+// 인자(지름)값으로 생성할 행성을 선택한다.
+Planet.prototype.selectPlanet = function () {
+  switch (this.dia) {
     case 7:
-      this.makeSun(dia, radius, centerX, centerY);
+      this.makePlanet("🔥");
       break;
     case 5:
-      this.makeMars(dia, radius, centerX, centerY);
+      this.makePlanet("🎈");
       break;
     case 3:
-      this.makeEarth(dia, radius, centerX, centerY);
+      this.makePlanet("🌏");
       break;
     case 1:
-      this.makeMoon(dia, radius, centerX, centerY);
+      this.makePlanet("🌕");
       break;
   }
 };
 
-// Sun 생성 함수
-space.makeSun = function (d, r, x, y) {
-  this.sun = Array.from({ length: d }, () => Array(d));
+// 선택받은 행성을 생성한다.
+Planet.prototype.makePlanet = function (imo) {
+  this.array = Array.from({ length: this.dia }, () => Array(this.dia));
 
-  for (let i = x - r; i <= x + r; i++) {
-    for (let j = y - r; j <= y + r; j++) {
-      if ((i - r) * (i - r) + (j - r) * (j - r) <= r * r) {
-        this.sun[i][j] = "🔥";
+  for (
+    let i = this.centerX - this.radius;
+    i <= this.centerX + this.radius;
+    i++
+  ) {
+    for (
+      let j = this.centerY - this.radius;
+      j <= this.centerY + this.radius;
+      j++
+    ) {
+      if (
+        (i - this.radius) * (i - this.radius) +
+          (j - this.radius) * (j - this.radius) <=
+        this.radius * this.radius
+      ) {
+        this.array[i][j] = `${imo}`;
       } else {
-        this.sun[i][j] = "";
+        this.array[i][j] = "";
       }
     }
   }
-  this.showTheSun(d);
 };
 
-// Sun 호출 함수
-space.showTheSun = function (d) {
-  for (let i = 0; i < d; i++) {
-    const div = document.createElement("div");
-    div.innerText = this.sun[i];
-    sunObject.appendChild(div);
-  }
-};
+// 행성이름과 지름값을 부여한다.
+const sun = new Planet("sun", 7);
+const earth = new Planet("earth", 3);
+const moon = new Planet("moon", 1);
+const mars = new Planet("mars", 5);
 
-// Earth 생성 함수
-space.makeEarth = function (d, r, x, y) {
-  this.earth = Array.from({ length: d }, () => Array(d));
-
-  for (let i = x - r; i <= x + r; i++) {
-    for (let j = y - r; j <= y + r; j++) {
-      if ((i - r) * (i - r) + (j - r) * (j - r) <= r * r) {
-        this.earth[i][j] = "🌏";
-      } else {
-        this.earth[i][j] = "";
-      }
-    }
-  }
-  this.showTheEarth(d);
-};
-
-// Earth 호출 함수
-space.showTheEarth = function (d) {
-  for (let i = 0; i < d; i++) {
-    const div = document.createElement("div");
-    div.innerText = this.earth[i];
-    earthObject.appendChild(div);
-  }
-};
-
-// Moon 생성 함수
-space.makeMoon = function (d, r, x, y) {
-  this.moon = Array.from({ length: d }, () => Array(d));
-
-  for (let i = x - r; i <= x + r; i++) {
-    for (let j = y - r; j <= y + r; j++) {
-      if ((i - r) * (i - r) + (j - r) * (j - r) <= r * r) {
-        this.moon[i][j] = "🌕";
-      } else {
-        this.moon[i][j] = "";
-      }
-    }
-  }
-  this.showTheMoon(d);
-};
-
-// Moon 호출 함수
-space.showTheMoon = function (d) {
-  for (let i = 0; i < d; i++) {
-    const div = document.createElement("div");
-    div.innerText = this.moon[i];
-    moonObject.appendChild(div);
-  }
-};
-
-// Mars 생성 함수
-space.makeMars = function (d, r, x, y) {
-  this.mars = Array.from({ length: d }, () => Array(d));
-
-  for (let i = x - r; i <= x + r; i++) {
-    for (let j = y - r; j <= y + r; j++) {
-      if ((i - r) * (i - r) + (j - r) * (j - r) <= r * r) {
-        this.mars[i][j] = "☄️";
-      } else {
-        this.mars[i][j] = "";
-      }
-    }
-  }
-  this.showTheMars(d);
-};
-
-// Mars 호출 함수
-space.showTheMars = function (d) {
-  for (let i = 0; i < d; i++) {
-    const div = document.createElement("div");
-    div.innerText = this.mars[i];
-    marsObject.appendChild(div);
-  }
-};
-
-// Sun, Earth, Moon, Mars의 지름 초기값을 입력 해준다.
-space.init = function () {
-  const sunR = 7;
-  const earthR = 3;
-  const moonR = 1;
-  const marsR = 5; // Mars 추가
-
-  this.planetSize(sunR);
-  this.planetSize(earthR);
-  this.planetSize(moonR);
-  this.planetSize(marsR);
-};
-
-space.init();
+sun.selectPlanet();
+sun.getObj();
+mars.selectPlanet();
+mars.getObj();
+earth.selectPlanet();
+earth.getObj();
+moon.selectPlanet();
+moon.getObj();
